@@ -141,7 +141,6 @@ Params parseArguments(int argc, char **argv) {
     Params params;
     params.samples = 20;
     params.tdelay = 500000; 
-    /* Initialize flags */
     int flag_memory = 0, flag_cpu = 0, flag_cores = 0;
     int flagsFound = 0;
     int posArgIndex = 1;
@@ -217,17 +216,15 @@ double getMemoryUsage(void) {
     double memTotal = 0, memAvailable = 0;
     while (fgets(line, sizeof(line), fp)) {
         if (sscanf(line, "MemTotal: %lf kB", &memTotal) == 1) {
-            /* got total */
         }
         if (sscanf(line, "MemAvailable: %lf kB", &memAvailable) == 1) {
-            /* got available */
         }
         if (memTotal > 0 && memAvailable > 0)
             break;
     }
     fclose(fp);
-    double memUsed = memTotal - memAvailable; // in kB
-    return memUsed / (1024 * 1024);           // convert to GB
+    double memUsed = memTotal - memAvailable; 
+    return memUsed / (1024 * 1024);           
 }
 
 double getTotalMemory(void) {
